@@ -65,11 +65,11 @@ class Derpinou extends Base {
                         try {
                             if (!evt) return;
                             const event = new (require(`../events/${dir}/${evt}`))(this.bot);
-                            console.log(`${evt} chargé`);
+                            console.log(`${evt} loaded!`);
                             this.bot.on(evt.split(".")[0], (...args) => event.run(...args));
                         } catch (e) {
                             console.log(e)
-                            this.bot.emit("error", `${evt} n'a pas chargé ${e.stack}`)
+                            this.bot.emit("error", `${evt} has not loaded ${e.stack}`)
                         }
                     }
                 })
