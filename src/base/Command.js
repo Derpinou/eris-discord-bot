@@ -8,7 +8,7 @@ module.exports = class Command {
         botPermissions = [],
         owner = false,
     }) {
-        let name = filename ? filename.split(path.sep)[filename.split(path.sep).length - 1].replace('.js', "").toLowerCase(): 'Unkown',
+        let name = filename ? filename.split(path.sep)[filename.split(path.sep).length - 1].replace('.js', "").toLowerCase(): 'Unknown',
             category = dirname ? dirname.split(path.sep)[dirname.split(path.sep).length - 1].toLowerCase() : 'Other';
         this.client = client;
         this.conf = {enabled, aliases, botPermissions, owner};
