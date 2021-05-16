@@ -64,18 +64,26 @@ class Derpinou extends Base {
                     for (const evt of file) {
                         try {
                             if (!evt) return;
-                            const event = new (require(`../events/${dir}/${evt}`))(this.bot);
-                            console.log(`${evt} loaded!`);
-                            this.bot.on(evt.split(".")[0], (...args) => event.run(...args));
+                            require("fs").readFile(__dirname + `/../src/events/${dir}/${evt}`, 'utf8' , async(err, data) => {
+                                const event = await new (require(`../src/events/${dir}/${evt}`))(this.bot);
+                                if (err) {
+                                    console.error(err)
+                                    return
+                                }
+                                console.log(`${evt} loaded`);
+                                var ar = data.match(/run\((.*?)\)/);
+                                if(ar[1] === "") event.run();
+                                else this.bot.on(evt.split(".")[0], (...args) => event.run(...args));
+                            })
                         } catch (e) {
                             console.log(e)
-                            this.bot.emit("error", `${evt} has not loaded ${e.stack}`)
+                            this.bot.emit("error", `${evt} isn't loaded ${e.stack}`)
                         }
                     }
                 })
             }
         });
-        return this
+        return this;
     }
 }
 module.exports = Derpinou;
